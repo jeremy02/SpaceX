@@ -1,5 +1,6 @@
 package com.demo.spacex.network.services
 
+import com.demo.spacex.models.company_info.CompanyInfo
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Single
 import retrofit2.Call
@@ -12,8 +13,6 @@ import java.util.ArrayList
 interface ApiService {
 
     // get company info
-    @POST("customer/login")
-    fun getCompanyInfo(
-        @Body loginRequest: LoginRequestParams
-    ): Single<LoginResponse?>
+    @GET("info")
+    fun getCompanyInfo(): Single<CompanyInfo?>
 }

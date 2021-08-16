@@ -4,6 +4,8 @@
     package="com.demo.spacex"
     tools:ignore="UnusedAttribute">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".SpacexApplication"
         android:supportsRtl="true"
