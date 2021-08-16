@@ -1,11 +1,9 @@
 package com.demo.spacex.main
 
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,7 +16,6 @@ import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,8 +48,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.getCompanyInfo(true)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+
+            viewModel.getLaunches(true, "2017-08-01", "2020-08-22", null)
         }
     }
 

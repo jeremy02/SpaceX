@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.demo.spacex.models.company_info.CompanyInfo
+import com.demo.spacex.models.launch_info.Launches
 import com.demo.spacex.network.RetrofitProvider
 import com.demo.spacex.network.repository.NetworkRepository
 import com.demo.spacex.network.services.ApiService
@@ -28,6 +29,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val companyInfoResponse = MutableLiveData<ResponseUtil<CompanyInfo>>()
     fun companyInfoLiveData(): LiveData<ResponseUtil<CompanyInfo>> = companyInfoResponse
 
+    // used in getting the launches
+    private val launchesResponse = MutableLiveData<ResponseUtil<Launches>>()
+    fun launchesLiveData(): LiveData<ResponseUtil<Launches>> = launchesResponse
+
     private val apiService: ApiService
         get() {
             return RetrofitProvider.provideRetrofit().create(ApiService::class.java)
@@ -45,6 +50,39 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 .subscribeWith(object : DisposableSingleObserver<CompanyInfo?>() {
                     override fun onSuccess(res: CompanyInfo) {
+                        Log.e(TAG, res.toString())
+                    }
+
+                    override fun onError(e: Throwable) {
+                        companyInfoResponse.value = when (e) {
+                            is NoNetworkException -> ResponseUtil.networkLost()
+                            else -> ResponseUtil.error(e)
+                        }
+                    }
+                })
+        )
+    }
+
+
+    // get the launches
+    fun getLaunches(isFirst: Boolean, startDate: String, endDate: String, launchSuccess: Boolean?) {
+        // add the type param to the request
+//        val paramsMap: MutableMap<String, Any> = HashMap()
+//        paramsMap["start"] = startDate
+//        paramsMap["end"] = endDate
+//        paramsMap["launch_success"] = launchSuccess
+
+
+
+        compositeDisposable.add(
+            networkRepository.getLaunches(startDate, endDate, launchSuccess)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    launchesResponse.value = ResponseUtil.loading(isFirst)
+                }
+                .subscribeWith(object : DisposableSingleObserver<Launches?>() {
+                    override fun onSuccess(res: Launches) {
                         Log.e(TAG, res.toString())
                     }
 
