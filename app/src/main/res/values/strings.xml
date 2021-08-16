@@ -9,4 +9,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="filter_dialog_title">Filter Launches</string>
+    <string name="filter_dialog_cancel">Cancel</string>
+    <string name="filter_dialog_filter">Filter</string>
 </resources>

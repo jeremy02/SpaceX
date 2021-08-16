@@ -22,4 +22,10 @@
     <style name="Theme.SpaceX.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SpaceX.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FullWidthDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+    </style>
+
 </resources>

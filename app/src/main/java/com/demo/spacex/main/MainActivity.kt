@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -51,7 +52,10 @@ class MainActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 
-            viewModel.getLaunches(true, "2017-08-01", "2020-08-22", null)
+            // viewModel.getLaunches(true, "2017-08-01", "2020-08-22", null)
+            val manager: FragmentManager = supportFragmentManager
+            val filterDialog = FilterDialog()
+            filterDialog.show(manager, "filter_dialog")
         }
     }
 
