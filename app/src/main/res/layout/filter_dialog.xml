@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="RelativeOverlap,RtlSymmetry,RtlHardcoded,HardcodedText,UnusedAttribute,UselessParent,ContentDescription">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_24"
+        android:padding="@dimen/dimen_16"
         android:background="@android:color/white">
 
         <TextView
@@ -22,22 +23,149 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/dimen_8" />
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/filter_dialog_content"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_below="@+id/filter_dialog_title_text_view">
 
-        </FrameLayout>
+            <LinearLayout
+                android:id="@+id/start_date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentTop="true">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/start_date_caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_4"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="@string/filter_dialog_start_date"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                    <TextView
+                        android:id="@+id/start_date_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="@string/filter_dialog_start_date"
+                        android:layout_below="@+id/start_date_caption"
+                        android:textColor="@color/text_color_gray_light"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/start_date_image_view"
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:srcCompat="@drawable/ic_date"
+                    app:tint="@color/text_color_gray_dark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/end_date_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_below="@+id/start_date_layout">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/end_date_caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_4"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="@string/filter_dialog_end_date"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                    <TextView
+                        android:id="@+id/end_date_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="@string/filter_dialog_end_date"
+                        android:layout_below="@+id/end_date_caption"
+                        android:textColor="@color/text_color_gray_light"/>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/end_date_image_view"
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:srcCompat="@drawable/ic_date"
+                    app:tint="@color/text_color_gray_dark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/launch_success_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_below="@+id/end_date_layout">
+
+                <TextView
+                    android:id="@+id/launch_success_switch_caption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_4"
+                    android:textSize="@dimen/text_size_14"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:text="@string/filter_dialog_check_box"
+                    android:textColor="@color/text_color_gray_dark"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/launch_success_switch"
+                    android:layout_width="@dimen/dimen_48"
+                    android:layout_height="@dimen/dimen_32"
+                    android:layout_marginRight="@dimen/dimen_12" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/filter_dialog_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:background="@color/text_color_gray_dark"
+            android:layout_below="@+id/filter_dialog_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_24"
             android:orientation="horizontal"
-            android:layout_below="@+id/filter_dialog_content">
+            android:layout_below="@+id/filter_dialog_divider">
 
             <TextView
                 android:id="@+id/dialog_cancel_btn"

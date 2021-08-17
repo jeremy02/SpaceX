@@ -18,16 +18,11 @@ class DatePickerFragment : DialogFragment() {
         val month: Int = c.get(Calendar.MONTH)
         val day: Int = c.get(Calendar.DAY_OF_MONTH)
 
-        //Create a new DatePickerDialog instance and return it
-        /*
-            DatePickerDialog Public Constructors - Here we uses first one
-            public DatePickerDialog (Context context, DatePickerDialog.OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth)
-            public DatePickerDialog (Context context, int theme, DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth)
-         */ // return DatePickerDialog(requireContext(), this, year, month, day)
+        // Create a new DatePickerDialog instance
 
         val dialog = DatePickerDialog(
             requireContext(),
-            AlertDialog.THEME_HOLO_DARK,
+            AlertDialog.THEME_HOLO_LIGHT,
             parentFragment as OnDateSetListener,
             year,
             month,

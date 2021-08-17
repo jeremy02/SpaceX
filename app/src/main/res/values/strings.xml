@@ -15,4 +15,5 @@
     <string name="filter_dialog_filter">Filter</string>
     <string name="filter_dialog_start_date">Launch Start Date</string>
     <string name="filter_dialog_end_date">Launch End Date</string>
+    <string name="filter_dialog_check_box">Launch Success</string>
 </resources>

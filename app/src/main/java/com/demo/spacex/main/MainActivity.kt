@@ -1,6 +1,8 @@
 package com.demo.spacex.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,8 +19,9 @@ import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
+import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
 
     private val TAG: String = MainActivity::class.java.simpleName
 
@@ -92,6 +95,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // filter launches dialog
+    override fun onFilterLaunchesDialog(startDate: String?, endDate: String?, isLaunchSuccess: Boolean?) {
+        Log.e(TAG, "$startDate, $endDate, $isLaunchSuccess")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
