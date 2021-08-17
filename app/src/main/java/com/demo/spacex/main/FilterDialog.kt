@@ -44,19 +44,23 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         // init views
         binding.dialogCancelBtn.setOnClickListener{
             val newFragment: DialogFragment = DatePickerFragment()
-            newFragment.show(childFragmentManager, "Date Picker")
+            newFragment.show(childFragmentManager, getString(R.string.filter_dialog_start_date))
         }
     }
 
     interface DialogListener {
-        fun onFinishFilterDeviceDialog()
+        fun onFinishFilterLaunchesDialog()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
     }
 
-    override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
-        Log.e(TAG, "FilterDialog $month/$day/$year")
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        if (view.tag == getString(R.string.filter_dialog_start_date)) {
+            Log.e(TAG, "Start Date FilterDialog $month/$day/$year")
+        } else {
+            Log.e(TAG, "End Date FilterDialog $month/$day/$year")
+        }
     }
 }

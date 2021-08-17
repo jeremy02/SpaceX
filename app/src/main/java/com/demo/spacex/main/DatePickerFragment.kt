@@ -1,17 +1,15 @@
 package com.demo.spacex.main
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
 
 class DatePickerFragment : DialogFragment() {
-
-    private var date = ""
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         //Use the current date as the default date in the date picker
@@ -27,18 +25,17 @@ class DatePickerFragment : DialogFragment() {
             public DatePickerDialog (Context context, int theme, DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth)
          */ // return DatePickerDialog(requireContext(), this, year, month, day)
 
-        return DatePickerDialog(requireContext(), parentFragment as OnDateSetListener?, year, month, day)
-    }
+        val dialog = DatePickerDialog(
+            requireContext(),
+            AlertDialog.THEME_HOLO_DARK,
+            parentFragment as OnDateSetListener,
+            year,
+            month,
+            day
+        )
 
-    fun onDateSet(view: DatePicker?, yy: Int, mm: Int, dd: Int) {
-        populateSetDate(yy, mm + 1, dd)
-    }
-
-    fun populateSetDate(year: Int, month: Int, day: Int) {
-        date = "$month/$day/$year"
-    }
-
-    fun getDate(): String? {
-        return date
+        dialog.setTitle(tag)
+        dialog.datePicker.tag = tag
+        return dialog
     }
 }
