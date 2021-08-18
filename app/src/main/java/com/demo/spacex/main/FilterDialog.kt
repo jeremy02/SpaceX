@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FilterDialogBinding
 import com.demo.spacex.main.viewmodels.FilterViewModel
+import kotlinx.android.synthetic.main.filter_dialog.*
 
 
 class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {

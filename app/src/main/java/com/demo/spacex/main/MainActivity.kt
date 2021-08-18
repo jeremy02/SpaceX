@@ -4,31 +4,29 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.demo.spacex.R
 import com.demo.spacex.databinding.ActivityMainBinding
-import com.demo.spacex.main.viewmodels.FilterItem
-import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
+import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
+class MainActivity : AppCompatActivity() {
 
     private val TAG: String = MainActivity::class.java.simpleName
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var filterViewModel: FilterViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +40,6 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // get the view model
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        // initialize
-        filterViewModel = ViewModelProvider(this).get(FilterViewModel::class.java)
-
         // handle response
         viewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
 
@@ -55,13 +47,8 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
         viewModel.getCompanyInfo(true)
 
         binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-
-            // viewModel.getLaunches(true, "2017-08-01", "2020-08-22", null)
-            val manager: FragmentManager = supportFragmentManager
-            val filterDialog = FilterDialog()
-            filterDialog.show(manager, "filter_dialog")
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
         }
     }
 
@@ -100,10 +87,11 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
         }
     }
 
-    // filter launches dialog
-    override fun onFilterLaunchesDialog(startDate: String?, endDate: String?, isLaunchSuccess: Boolean?) {
-        // set the filtering data
-        filterViewModel.setFilterItemsLiveData(FilterItem(startDate, endDate,isLaunchSuccess))
+    // show the filter and sort dialog
+    private fun showFilterDialog() {
+        val manager: FragmentManager = supportFragmentManager
+        val filterDialog = FilterDialog()
+        filterDialog.show(manager, getString(R.string.filter_dialog_title))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -117,10 +105,8 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> {
-
-                filterViewModel.setSortLiveData("sortBy")
-
+            R.id.action_filter -> {
+                showFilterDialog()
                 return true
             }
             else -> super.onOptionsItemSelected(item)
