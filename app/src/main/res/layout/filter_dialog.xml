@@ -131,6 +131,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_below="@+id/end_date_layout">
 
+
                 <TextView
                     android:id="@+id/launch_success_switch_caption"
                     android:layout_width="0dp"
@@ -147,6 +148,69 @@
                     android:layout_width="@dimen/dimen_48"
                     android:layout_height="@dimen/dimen_32"
                     android:layout_marginRight="@dimen/dimen_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sort_launches_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_below="@+id/launch_success_layout">
+
+                <TextView
+                    android:id="@+id/sort_launches_toggle_caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dimen_4"
+                    android:textSize="@dimen/text_size_14"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:text="@string/filter_dialog_check_box"
+                    android:textColor="@color/text_color_gray_dark"/>
+
+                <RadioGroup
+                    android:id="@+id/sort_launches_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/outline">
+
+                    <RadioButton
+                        android:id="@+id/sort_launches_toggle_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:padding="@dimen/dimen_8"
+                        android:textColor="@drawable/switch_text"
+                        android:background="@drawable/switch_off"
+                        android:text="@string/filter_dialog_sort_on" />
+
+                    <RadioButton
+                        android:id="@+id/sort_launches_toggle_off"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginRight="1dp"
+                        android:padding="@dimen/dimen_8"
+                        android:layout_marginBottom="1dp"
+                        android:background="@drawable/switch_on"
+                        android:textColor="@drawable/switch_text"
+                        android:text="@string/filter_dialog_sort_off" />
+
+                </RadioGroup>
 
             </LinearLayout>
 

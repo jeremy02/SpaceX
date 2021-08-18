@@ -1,8 +1,6 @@
 package com.demo.spacex.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,11 +13,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.demo.spacex.R
 import com.demo.spacex.databinding.ActivityMainBinding
+import com.demo.spacex.main.viewmodels.FilterItem
+import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
-import java.util.ArrayList
 
 class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
 
@@ -29,6 +28,7 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var filterViewModel: FilterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
 
         // get the view model
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        // initialize
+        filterViewModel = ViewModelProvider(this).get(FilterViewModel::class.java)
 
         // handle response
         viewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
@@ -99,7 +102,8 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
 
     // filter launches dialog
     override fun onFilterLaunchesDialog(startDate: String?, endDate: String?, isLaunchSuccess: Boolean?) {
-        Log.e(TAG, "$startDate, $endDate, $isLaunchSuccess")
+        // set the filtering data
+        filterViewModel.setFilterItemsLiveData(FilterItem(startDate, endDate,isLaunchSuccess))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -113,7 +117,12 @@ class MainActivity : AppCompatActivity(), FilterDialog.DialogListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+
+                filterViewModel.setSortLiveData("sortBy")
+
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

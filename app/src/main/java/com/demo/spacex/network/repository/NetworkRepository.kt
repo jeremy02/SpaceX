@@ -5,7 +5,6 @@ import com.demo.spacex.models.launch_info.Launches
 import com.demo.spacex.network.RetrofitProvider
 import com.demo.spacex.network.services.ApiService
 import io.reactivex.Single
-import java.util.ArrayList
 
 class NetworkRepository {
 
@@ -18,8 +17,8 @@ class NetworkRepository {
     }
 
     // call the service for get company info
-    fun getLaunches(startDate: String?, endDate: String?, launchSuccess: Boolean?): Single<Launches?> {
-        return apiService.getLaunches(startDate, endDate, launchSuccess)
+    fun getLaunches(filterDates: MutableMap<String, String>?, launchSuccess: Boolean?): Single<Launches?> {
+        return apiService.getLaunches(filterDates, launchSuccess)
     }
 
     companion object {

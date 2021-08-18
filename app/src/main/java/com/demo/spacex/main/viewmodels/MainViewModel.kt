@@ -33,11 +33,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val launchesResponse = MutableLiveData<ResponseUtil<Launches>>()
     fun launchesLiveData(): LiveData<ResponseUtil<Launches>> = launchesResponse
 
+    val requestModel: MutableLiveData<BuyGoodsRequest> = MutableLiveData()
+
+    data class BuyGoodsRequest(
+        var transferMethod: Int = 0,
+        var amount: String = "",
+        var isBuyGoods: Int = 0,
+        var tillNumber: String = "",
+        var accountNumber: String = "",
+        var businessNumber: String = "",
+        var categoryId: Int = -1,
+        var categoryName: String = "",
+        var subcategoryId: Int = -1,
+        var subcategoryName: String = "",
+        var narrative: String = "",
+        var merchantName: String? = null
+    )
+
     private val apiService: ApiService
         get() {
             return RetrofitProvider.provideRetrofit().create(ApiService::class.java)
         }
-
 
     // call the api call to get company info
     fun getCompanyInfo(isFirst: Boolean) {
@@ -65,17 +81,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
     // get the launches
-    fun getLaunches(isFirst: Boolean, startDate: String, endDate: String, launchSuccess: Boolean?) {
+    fun getLaunches(isFirst: Boolean, filterItem: FilterItem) {
         // add the type param to the request
-//        val paramsMap: MutableMap<String, Any> = HashMap()
-//        paramsMap["start"] = startDate
-//        paramsMap["end"] = endDate
-//        paramsMap["launch_success"] = launchSuccess
-
-
+        val filterDatesParams: MutableMap<String, String> = HashMap()
+        if(filterItem.startDate!=null){
+            filterDatesParams.set("start", filterItem.startDate!!)
+        }
+        if(filterItem.endDate != null){
+            filterDatesParams.set("end", filterItem.endDate!!)
+        }
 
         compositeDisposable.add(
-            networkRepository.getLaunches(startDate, endDate, launchSuccess)
+            networkRepository.getLaunches(filterDatesParams, filterItem.launchSuccess)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {

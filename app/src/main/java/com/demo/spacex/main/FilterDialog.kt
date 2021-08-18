@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FilterDialogBinding
+import com.demo.spacex.main.viewmodels.FilterViewModel
 
 
 class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -19,6 +21,8 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
     private val TAG: String = FilterDialog::class.java.simpleName
 
     private lateinit var binding : FilterDialogBinding
+
+    private val filterViewModel: FilterViewModel by activityViewModels()
 
     private var isLaunchSuccess: Boolean? = null
     private var startDate: String? = null
@@ -45,7 +49,48 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // init views and show start date picker dialog filter
+        // observe start date
+        filterViewModel.startDate.observe(viewLifecycleOwner, {
+            if(it != null){
+                binding.startDateTextView.visibility = View.VISIBLE
+                binding.startDateTextView.text = it
+            }
+        })
+
+        // observe end date
+        filterViewModel.endDate.observe(viewLifecycleOwner, {
+            if(it != null){
+                binding.endDateTextView.visibility = View.VISIBLE
+                binding.endDateTextView.text = it
+            }
+        })
+
+        // observe filter by launch success
+        filterViewModel.launchSuccess.observe(viewLifecycleOwner, {
+            if(it != null){
+                binding.launchSuccessSwitch.isChecked = it
+            }
+        })
+
+        // observe sort order
+        filterViewModel.sortOrderLiveData.observe(viewLifecycleOwner, {
+            if(it != null){
+                if(it){
+                    binding.sortLaunchesRadioGroup.check(R.id.sort_launches_toggle_on)
+                }else if(!it){
+                    binding.sortLaunchesRadioGroup.check(R.id.sort_launches_toggle_off)
+                }else{
+                    binding.sortLaunchesRadioGroup.clearCheck()
+                }
+            }
+        })
+
+        // init views
+        initViews()
+    }
+
+    private fun initViews() {
+        // show start date picker dialog filter
         binding.startDateLayout.setOnClickListener{
             showDatePickerDialog(true)
         }
@@ -53,7 +98,7 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
             showDatePickerDialog(true)
         }
 
-        // init views and show end date picker dialog filter
+        // show end date picker dialog filter
         binding.endDateLayout.setOnClickListener{
             showDatePickerDialog(false)
         }
@@ -64,7 +109,20 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         // launch success toggle switch
         binding.launchSuccessSwitch.setOnCheckedChangeListener { switch, isChecked ->
             // Handle switch checked/unchecked
-            isLaunchSuccess = isChecked
+            filterViewModel.setLaunchSuccess(isChecked)
+        }
+
+        // sort by ascending or descending buttons
+        binding.sortLaunchesRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            // This will get the radiobutton that has changed in its check state
+            // val checkedRadioButton = group.findViewById<View>(checkedId) as RadioButton
+            if (checkedId == R.id.sort_launches_toggle_on) {
+                filterViewModel.setSortOrder(true)
+            }
+
+            if (checkedId == R.id.sort_launches_toggle_off) {
+                filterViewModel.setSortOrder(false)
+            }
         }
 
         // button cancel click
@@ -74,8 +132,8 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         // button filter click
         binding.dialogFilterBtn.setOnClickListener {
-            val dialogListener = requireActivity() as DialogListener
-            dialogListener.onFilterLaunchesDialog(startDate, endDate, isLaunchSuccess)
+            // Called when the filter button is clicked
+            filterViewModel.callFilterSortFunction(true)
             dismiss()
         }
     }
@@ -94,10 +152,6 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         fun onFilterLaunchesDialog(startDate: String?, endDate: String?, isLaunchSuccess: Boolean?)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val month = monthOfYear + 1
         var formattedM = "" + month
@@ -105,6 +159,7 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         if (month < 10) {
             formattedM = "0$month"
         }
+
         if (dayOfMonth < 10) {
             formattedDy = "0$dayOfMonth"
         }
@@ -113,13 +168,9 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         val setDate = "$year-$formattedM-$formattedDy"
 
         if (view.tag == getString(R.string.filter_dialog_start_date)) {
-            startDate = setDate
-            binding.startDateTextView.visibility = View.VISIBLE
-            binding.startDateTextView.text = startDate
+            filterViewModel.selectStartDate(setDate)
         } else {
-            endDate = setDate
-            binding.endDateTextView.visibility = View.VISIBLE
-            binding.endDateTextView.text = endDate
+            filterViewModel.selectEndDate(setDate)
         }
     }
 }
