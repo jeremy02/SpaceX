@@ -5,11 +5,11 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.demo.spacex.models.FilterItem
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.models.launch_info.Launches
-import com.demo.spacex.network.RetrofitProvider
+import com.demo.spacex.models.launch_info.LaunchesResponse
 import com.demo.spacex.network.repository.NetworkRepository
-import com.demo.spacex.network.services.ApiService
 import com.demo.spacex.network.utils.NoNetworkException
 import com.demo.spacex.network.utils.ResponseUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +21,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val TAG: String =  MainViewModel::class.java.simpleName
 
-    // using Rx
     private val compositeDisposable = CompositeDisposable()
     private var networkRepository: NetworkRepository = NetworkRepository()
 
@@ -29,31 +28,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val companyInfoResponse = MutableLiveData<ResponseUtil<CompanyInfo>>()
     fun companyInfoLiveData(): LiveData<ResponseUtil<CompanyInfo>> = companyInfoResponse
 
-    // used in getting the launches
-    private val launchesResponse = MutableLiveData<ResponseUtil<Launches>>()
-    fun launchesLiveData(): LiveData<ResponseUtil<Launches>> = launchesResponse
+//    // used in getting the launches info
+//    private val launchesResponse = MutableLiveData<ResponseUtil<List<Launches>>>()
+//    fun launchesLiveData(): LiveData<ResponseUtil<List<Launches>>> = launchesResponse
 
-    val requestModel: MutableLiveData<BuyGoodsRequest> = MutableLiveData()
-
-    data class BuyGoodsRequest(
-        var transferMethod: Int = 0,
-        var amount: String = "",
-        var isBuyGoods: Int = 0,
-        var tillNumber: String = "",
-        var accountNumber: String = "",
-        var businessNumber: String = "",
-        var categoryId: Int = -1,
-        var categoryName: String = "",
-        var subcategoryId: Int = -1,
-        var subcategoryName: String = "",
-        var narrative: String = "",
-        var merchantName: String? = null
-    )
-
-    private val apiService: ApiService
-        get() {
-            return RetrofitProvider.provideRetrofit().create(ApiService::class.java)
-        }
+    // used in getting the launches info
+    private val launchesResponse = MutableLiveData<ResponseUtil<LaunchesResponse>>()
+    fun launchesLiveData(): LiveData<ResponseUtil<LaunchesResponse>> = launchesResponse
 
     // call the api call to get company info
     fun getCompanyInfo(isFirst: Boolean) {
@@ -66,7 +47,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 .subscribeWith(object : DisposableSingleObserver<CompanyInfo?>() {
                     override fun onSuccess(res: CompanyInfo) {
-                        Log.e(TAG, res.toString())
+//                        Log.e(TAG, res.toString())
                     }
 
                     override fun onError(e: Throwable) {
@@ -79,31 +60,51 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
-
-    // get the launches
+    // call the api call to get the launches
     fun getLaunches(isFirst: Boolean, filterItem: FilterItem) {
         // add the type param to the request
-        val filterDatesParams: MutableMap<String, String> = HashMap()
+        val filterSortParams: MutableMap<String, String> = HashMap()
+
+        // start date filter
         if(filterItem.startDate!=null){
-            filterDatesParams.set("start", filterItem.startDate!!)
-        }
-        if(filterItem.endDate != null){
-            filterDatesParams.set("end", filterItem.endDate!!)
+            filterSortParams["start"] = filterItem.startDate!!
         }
 
+        // end date filter
+        if(filterItem.endDate != null){
+            filterSortParams["end"] = filterItem.endDate!!
+        }
+
+        // sort by flight_number and whether asc or desc
+        if(filterItem.sortOrder != null){
+            filterSortParams["sort"] = filterItem.sortBy!!
+            if(filterItem.sortOrder!!) {
+                // filter in ascending order
+                filterSortParams["order"] = "asc"
+            }else{
+                // filter in descending order
+                filterSortParams["order"] = "desc"
+            }
+        }
+
+        /*
+             Please note we have called the param launch_success separately because it is a boolean variable and all the other
+             parameter values are strings thats why they are added as a single HashMap of filterParams
+         */
         compositeDisposable.add(
-            networkRepository.getLaunches(filterDatesParams, filterItem.launchSuccess)
+            networkRepository.getLaunches(filterSortParams, filterItem.launchSuccess)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     launchesResponse.value = ResponseUtil.loading(isFirst)
                 }
-                .subscribeWith(object : DisposableSingleObserver<Launches?>() {
-                    override fun onSuccess(res: Launches) {
-                        Log.e(TAG, res.toString())
+                .subscribeWith(object : DisposableSingleObserver<List<Launches?>>() {
+                    override fun onSuccess(res: List<Launches?>) {
+                        launchesResponse.value =
+                            ResponseUtil.succeed(LaunchesResponse(error = null,launchItems = res), isFirst = isFirst)
                     }
-
                     override fun onError(e: Throwable) {
+                        Log.e("$TAG Error", e.toString())
                         companyInfoResponse.value = when (e) {
                             is NoNetworkException -> ResponseUtil.networkLost()
                             else -> ResponseUtil.error(e)

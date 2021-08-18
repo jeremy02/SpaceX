@@ -1,5 +1,7 @@
 package com.demo.spacex.network.utils
 
+import com.demo.spacex.models.launch_info.Launches
+
 data class ResponseUtil<T>(
         val status: Status,
         val data: T?,

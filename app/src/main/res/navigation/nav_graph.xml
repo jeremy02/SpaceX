@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LaunchesListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.demo.spacex.main.FirstFragment"
+        android:id="@+id/LaunchesListFragment"
+        android:name="com.demo.spacex.main.ui.fragments.LaunchesListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_launches_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_LaunchesListFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.demo.spacex.SecondFragment"
@@ -22,7 +24,7 @@
         tools:layout="@layout/fragment_second">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_SecondFragment_to_LaunchesListFragment"
+            app:destination="@id/LaunchesListFragment" />
     </fragment>
 </navigation>

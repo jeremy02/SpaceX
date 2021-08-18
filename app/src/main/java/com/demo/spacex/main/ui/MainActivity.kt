@@ -1,4 +1,4 @@
-package com.demo.spacex.main
+package com.demo.spacex.main.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -13,11 +13,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.demo.spacex.R
 import com.demo.spacex.databinding.ActivityMainBinding
+import com.demo.spacex.main.ui.fragments.FilterDialogFragment
+import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+
+    private val filterViewModel: FilterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,56 +44,20 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // handle response
-        viewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
+        // mainViewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
 
         // get the company info
-        viewModel.getCompanyInfo(true)
+        mainViewModel.getCompanyInfo(true)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-    }
-
-    private fun handleResponse(response: ResponseUtil<CompanyInfo>?) {
-        response?.let {
-            when (it.status) {
-                Status.LOADING -> {
-                    if (it.isFirst) {
-                        Log.e(TAG, "it.isFirst")
-                    } else {
-                        Log.e(TAG, " no it.isFirst")
-                    }
-                }
-
-                Status.REFRESHING -> {
-                    Log.e(TAG, "REFRESHING")
-                }
-
-                Status.EMPTY -> {
-                    Log.e(TAG, "EMPTY")
-                }
-
-                Status.SUCCEED -> {
-                    Log.e(TAG, "SUCCEED")
-                    Log.e(TAG, response.data.toString())
-                }
-
-                Status.FAILED -> {
-                    Log.e(TAG, "FAILED")
-                }
-
-                Status.NO_CONNECTION -> {
-                    Log.e(TAG, "NO_CONNECTION")
-                }
-            }
-        }
+        // call the api to get the launches by setting this variable to true
+        // this can also be called in the fragment from which we observe the launches live data
+        // filterViewModel.callLaunchesApiFunction(true)
     }
 
     // show the filter and sort dialog
     private fun showFilterDialog() {
         val manager: FragmentManager = supportFragmentManager
-        val filterDialog = FilterDialog()
+        val filterDialog = FilterDialogFragment()
         filterDialog.show(manager, getString(R.string.filter_dialog_title))
     }
 

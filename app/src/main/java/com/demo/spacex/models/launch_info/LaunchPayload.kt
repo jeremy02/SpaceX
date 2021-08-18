@@ -33,7 +33,7 @@ class LaunchPayload {
 
     @SerializedName("payload_mass_kg")
     @Expose
-    var payloadMassKg: Int? = null
+    var payloadMassKg: Any? = null
 
     @SerializedName("payload_mass_lbs")
     @Expose

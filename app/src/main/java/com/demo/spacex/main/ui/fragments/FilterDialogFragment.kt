@@ -1,4 +1,4 @@
-package com.demo.spacex.main
+package com.demo.spacex.main.ui.fragments
 
 import android.app.DatePickerDialog
 import android.graphics.Color
@@ -14,12 +14,11 @@ import androidx.fragment.app.activityViewModels
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FilterDialogBinding
 import com.demo.spacex.main.viewmodels.FilterViewModel
-import kotlinx.android.synthetic.main.filter_dialog.*
 
 
-class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
-    private val TAG: String = FilterDialog::class.java.simpleName
+    private val TAG: String = FilterDialogFragment::class.java.simpleName
 
     private lateinit var binding : FilterDialogBinding
 
@@ -74,7 +73,7 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         })
 
         // observe sort order
-        filterViewModel.sortOrderLiveData.observe(viewLifecycleOwner, {
+        filterViewModel.sortOrder.observe(viewLifecycleOwner, {
             if(it != null){
                 if(it){
                     binding.sortLaunchesRadioGroup.check(R.id.sort_launches_toggle_on)
@@ -134,7 +133,7 @@ class FilterDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener {
         // button filter click
         binding.dialogFilterBtn.setOnClickListener {
             // Called when the filter button is clicked
-            filterViewModel.callFilterSortFunction(true)
+            filterViewModel.callLaunchesApiFunction(true)
             dismiss()
         }
     }

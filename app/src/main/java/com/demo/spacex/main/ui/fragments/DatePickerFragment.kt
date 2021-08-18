@@ -1,4 +1,4 @@
-package com.demo.spacex.main
+package com.demo.spacex.main.ui.fragments
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog

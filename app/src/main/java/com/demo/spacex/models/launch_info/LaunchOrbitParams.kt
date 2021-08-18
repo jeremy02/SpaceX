@@ -13,7 +13,7 @@ class LaunchOrbitParams {
 
     @SerializedName("longitude")
     @Expose
-    var longitude: Int? = null
+    var longitude: Any? = null
 
     @SerializedName("semi_major_axis_km")
     @Expose
@@ -41,7 +41,7 @@ class LaunchOrbitParams {
 
     @SerializedName("lifespan_years")
     @Expose
-    var lifespanYears: Int? = null
+    var lifespanYears: Any? = null
 
     @SerializedName("epoch")
     @Expose
@@ -63,7 +63,7 @@ class LaunchOrbitParams {
     @Expose
     var meanAnomaly: Double? = null
 
-    override fun toString(): String {
-        return "LaunchOrbitParams(referenceSystem=$referenceSystem, regime=$regime, longitude=$longitude, semiMajorAxisKm=$semiMajorAxisKm, eccentricity=$eccentricity, periapsisKm=$periapsisKm, apoapsisKm=$apoapsisKm, inclinationDeg=$inclinationDeg, periodMin=$periodMin, lifespanYears=$lifespanYears, epoch=$epoch, meanMotion=$meanMotion, raan=$raan, argOfPericenter=$argOfPericenter, meanAnomaly=$meanAnomaly)"
-    }
+//    override fun toString(): String {
+//        return "LaunchOrbitParams(referenceSystem=$referenceSystem, regime=$regime, longitude=$longitude, semiMajorAxisKm=$semiMajorAxisKm, eccentricity=$eccentricity, periapsisKm=$periapsisKm, apoapsisKm=$apoapsisKm, inclinationDeg=$inclinationDeg, periodMin=$periodMin, lifespanYears=$lifespanYears, epoch=$epoch, meanMotion=$meanMotion, raan=$raan, argOfPericenter=$argOfPericenter, meanAnomaly=$meanAnomaly)"
+//    }
 }

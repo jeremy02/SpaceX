@@ -35,17 +35,17 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     // filter by launch success
     private val mutableSortOrderItem = MutableLiveData<Boolean>()
-    val sortOrderLiveData: LiveData<Boolean> get() = mutableSortOrderItem
+    val sortOrder: LiveData<Boolean> get() = mutableSortOrderItem
 
     fun setSortOrder(sortAsc: Boolean) {
         mutableSortOrderItem.value = sortAsc
     }
 
     // filter by launch success
-    private val mutableCallFilterSortFunctionItem = MutableLiveData<Boolean>()
-    val callFilterSortFunctionLiveData: LiveData<Boolean> get() = mutableCallFilterSortFunctionItem
+    private val mutableCallLaunchesApiFunctionItem = MutableLiveData<Boolean>()
+    val callLaunchesApiFunctionLiveData: LiveData<Boolean> get() = mutableCallLaunchesApiFunctionItem
 
-    fun callFilterSortFunction(callFunction: Boolean) {
-        mutableCallFilterSortFunctionItem.value = callFunction
+    fun callLaunchesApiFunction(callFunction: Boolean) {
+        mutableCallLaunchesApiFunctionItem.value = callFunction
     }
 }
