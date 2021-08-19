@@ -63,7 +63,7 @@ class LaunchOrbitParams {
     @Expose
     var meanAnomaly: Double? = null
 
-//    override fun toString(): String {
-//        return "LaunchOrbitParams(referenceSystem=$referenceSystem, regime=$regime, longitude=$longitude, semiMajorAxisKm=$semiMajorAxisKm, eccentricity=$eccentricity, periapsisKm=$periapsisKm, apoapsisKm=$apoapsisKm, inclinationDeg=$inclinationDeg, periodMin=$periodMin, lifespanYears=$lifespanYears, epoch=$epoch, meanMotion=$meanMotion, raan=$raan, argOfPericenter=$argOfPericenter, meanAnomaly=$meanAnomaly)"
-//    }
+    override fun toString(): String {
+        return "LaunchOrbitParams(referenceSystem=$referenceSystem, regime=$regime, longitude=$longitude, semiMajorAxisKm=$semiMajorAxisKm, eccentricity=$eccentricity, periapsisKm=$periapsisKm, apoapsisKm=$apoapsisKm, inclinationDeg=$inclinationDeg, periodMin=$periodMin, lifespanYears=$lifespanYears, epoch=$epoch, meanMotion=$meanMotion, raan=$raan, argOfPericenter=$argOfPericenter, meanAnomaly=$meanAnomaly)"
+    }
 }

@@ -33,4 +33,8 @@
     <string name="launch_upcoming">Upcoming</string>
     <string name="launch_success">Launched Successfully</string>
     <string name="launch_failed">Launched Failed</string>
+    <string name="launch_date">Launch Date</string>
+    <string name="launch_name">Launch Name</string>
+    <string name="launch_time">Launch time:</string>
+    <string name="launch_site">Launch site:    </string>
 </resources>

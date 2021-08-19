@@ -66,7 +66,7 @@ class Launches {
 
     @SerializedName("links")
     @Expose
-    var links: Links? = null
+    var links: LaunchLinks? = null
 
     @SerializedName("details")
     @Expose
