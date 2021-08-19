@@ -1,23 +1,28 @@
 package com.demo.spacex.main.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FragmentLaunchesListBinding
-import com.demo.spacex.models.FilterItem
+import com.demo.spacex.main.ui.adapters.LaunchesAdapter
 import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
-import com.demo.spacex.models.company_info.CompanyInfo
+import com.demo.spacex.models.FilterItem
 import com.demo.spacex.models.launch_info.Launches
 import com.demo.spacex.models.launch_info.LaunchesResponse
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
+import kotlinx.android.synthetic.main.error_message.*
+import kotlinx.android.synthetic.main.fragment_launches_list.*
+import kotlinx.android.synthetic.main.progress_bar.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -32,9 +37,16 @@ class LaunchesListFragment : Fragment() {
 
     private val filterViewModel: FilterViewModel by activityViewModels()
 
+    private lateinit var launchesList: List<Launches>
+
+    private lateinit var mLaunchesAdapter: LaunchesAdapter
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    // make the adapter unclickable until finished with loading launches
+    private var adapterClickable: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +60,15 @@ class LaunchesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_LaunchesListFragment_to_SecondFragment)
-        }
+//        binding.buttonFirst.setOnClickListener {
+//            findNavController().navigate(R.id.action_LaunchesListFragment_to_SecondFragment)
+//        }
 
         // handle response from getting launches
         mainViewModel.launchesLiveData().observe(viewLifecycleOwner, { handleResponse(it) })
+
+        // initialize the views
+        initViews()
 
         // observe callFilterSortFunctionLiveData to check if we need to call the api function
         filterViewModel.callLaunchesApiFunctionLiveData.observe(viewLifecycleOwner, {
@@ -80,37 +95,141 @@ class LaunchesListFragment : Fragment() {
         filterViewModel.callLaunchesApiFunction(true)
     }
 
+    // initialize the views
+    private fun initViews() {
+        progress_bar_container.visibility = View.GONE
+        error_container.visibility = View.GONE
+        no_launches_found.visibility = View.GONE
+        launches_recycler_view.visibility = View.GONE
+
+        // this is the button from the error container
+        btn_ok.setOnClickListener {
+            switchStateUI(View.GONE, View.GONE, View.GONE, false)
+        }
+
+        // refresh goals list by calling API
+        swipe_to_refresh_layout.setOnRefreshListener {
+            swipe_to_refresh_layout.isRefreshing = true
+
+            initRecyclerView() // reset recyclerview
+
+            filterViewModel.callLaunchesApiFunction(true) // get the launches by setting this value to true
+        }
+
+        // initialize the recyclerview
+        initRecyclerView()
+    }
+
     private fun handleResponse(res: ResponseUtil<LaunchesResponse>?) {
+        swipe_to_refresh_layout.isRefreshing = false
+
+        // adapter not clickable
+        adapterClickable = false
+
         res?.let {
             when (it.status) {
                 Status.LOADING -> {
-                    if (it.isFirst) {
-                        Log.e(TAG, "it.isFirst")
-                    } else {
-                        Log.e(TAG, " no it.isFirst")
-                    }
+                    switchStateUI(View.GONE, View.VISIBLE, View.GONE, false)
                 }
 
                 Status.REFRESHING -> {
-                    Log.e(TAG, "REFRESHING")
+                    switchStateUI(View.GONE, View.VISIBLE, View.GONE, true)
                 }
 
                 Status.EMPTY -> {
-                    Log.e(TAG, "EMPTY")
+                    switchStateUI(View.GONE, View.GONE, View.VISIBLE, true)
                 }
 
                 Status.SUCCEED -> {
-                    Log.e(TAG, "SUCCEED")
-                    Log.e(TAG, res.data.toString())
+                    if(res.data?.launchItems != null && res.data.launchItems.isNotEmpty()) {
+                        refreshAdapter(res.data.launchItems) // refresh the adapter
+                        switchStateUI(View.GONE, View.GONE, View.GONE, false)
+                    }else{
+                        switchStateUI(View.GONE, View.GONE, View.GONE,true)
+                    }
                 }
 
                 Status.FAILED -> {
-                    Log.e(TAG, "FAILED")
+                    switchStateUI(View.VISIBLE, View.GONE, View.GONE, true)
+                    error_message.text = getString(R.string.api_fail_error)
+                    error_container.requestFocus()
                 }
 
                 Status.NO_CONNECTION -> {
-                    Log.e(TAG, "NO_CONNECTION")
+                    switchStateUI(View.VISIBLE, View.GONE, View.GONE, true)
+                    error_message.text = getString(R.string.api_network_error)
+                    error_container.requestFocus()
                 }
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        launchesList = ArrayList() // init data and empty the list of launches
+        // reset the adapter
+        val linearlayoutManager = LinearLayoutManager(requireActivity())
+        launches_recycler_view.layoutManager = linearlayoutManager
+        launches_recycler_view.setHasFixedSize(true)
+        launches_recycler_view.isNestedScrollingEnabled = false
+        mLaunchesAdapter = LaunchesAdapter(requireActivity(),launchesList.toMutableList())
+        launches_recycler_view.adapter = mLaunchesAdapter
+
+        // this will sort the issue of swipe to refresh view not working with recycler view
+        // recyclerview on scroll conflict with swipe refresh layout is sorted by this code
+        launches_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (recyclerView.getChildAt(0) != null) {
+                    binding.swipeToRefreshLayout.isEnabled = (linearlayoutManager.findFirstVisibleItemPosition() == 0
+                            && recyclerView.getChildAt(0).top == 0)
+                }
+            }
+        })
+    }
+
+    // change ui according to error, loading states etc
+    private fun switchStateUI(error: Int, loading: Int, isFirstLoad: Int, isLaunchesEmpty: Boolean) {
+        progress_bar_container.visibility = loading
+        error_container.visibility = error
+
+        if(isLaunchesEmpty){ // checking for list
+            if(progress_bar_container.isShown){
+                launches_recycler_view.visibility = View.GONE
+                no_launches_found.visibility = View.GONE
+            }else {
+                launches_recycler_view.visibility = View.GONE
+                no_launches_found.visibility = View.VISIBLE
+            }
+        }else{
+            if(mLaunchesAdapter.itemCount >= 1){
+                launches_recycler_view.visibility = View.VISIBLE
+                no_launches_found.visibility = View.GONE
+            }else {
+                launches_recycler_view.visibility = View.GONE
+                no_launches_found.visibility = View.GONE
+            }
+        }
+    }
+
+    // refresh the adapter with this list of launches
+    private fun refreshAdapter(launchItems: List<Launches>) {
+        mLaunchesAdapter = LaunchesAdapter(requireActivity(), launchItems.toMutableList())
+        launches_recycler_view.adapter = mLaunchesAdapter
+        mLaunchesAdapter.notifyDataSetChanged()
+
+        // click launches recycler view listener
+        mLaunchesAdapter.onItemClick = { _view:View, _position:Int, _launchObj:Launches ->
+            // show the launch item detail
+            if(adapterClickable) {
+                Log.e(TAG, "Launch is clicked $_launchObj")
+            } else {
+                switchStateUI(View.VISIBLE, View.GONE, View.GONE, true)
+                error_message.text = getString(R.string.error_ongoing_process)
+                error_container.requestFocus()
+
+                // hide the message after 5 seconds
+                Handler().postDelayed({
+                    switchStateUI(View.GONE, View.GONE, View.GONE, true)
+                }, 3000)
             }
         }
     }

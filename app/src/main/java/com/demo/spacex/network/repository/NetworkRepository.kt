@@ -2,7 +2,6 @@ package com.demo.spacex.network.repository
 
 import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.models.launch_info.Launches
-import com.demo.spacex.models.launch_info.LaunchesResponse
 import com.demo.spacex.network.RetrofitProvider
 import com.demo.spacex.network.services.ApiService
 import io.reactivex.Single
@@ -18,7 +17,7 @@ class NetworkRepository {
     }
 
     // call the service for get company info
-    fun getLaunches(filterSortParams: MutableMap<String, String>?, launchSuccess: Boolean?): Single<List<Launches?>> {
+    fun getLaunches(filterSortParams: MutableMap<String, String>?, launchSuccess: Boolean?): Single<List<Launches>> {
         return apiService.getLaunches(filterSortParams, launchSuccess)
     }
 

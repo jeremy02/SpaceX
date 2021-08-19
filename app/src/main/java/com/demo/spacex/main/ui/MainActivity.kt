@@ -1,7 +1,6 @@
 package com.demo.spacex.main.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -16,9 +15,6 @@ import com.demo.spacex.databinding.ActivityMainBinding
 import com.demo.spacex.main.ui.fragments.FilterDialogFragment
 import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
-import com.demo.spacex.models.company_info.CompanyInfo
-import com.demo.spacex.network.utils.ResponseUtil
-import com.demo.spacex.network.utils.Status
 
 class MainActivity : AppCompatActivity() {
 

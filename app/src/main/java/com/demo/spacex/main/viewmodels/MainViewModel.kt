@@ -98,8 +98,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 .doOnSubscribe {
                     launchesResponse.value = ResponseUtil.loading(isFirst)
                 }
-                .subscribeWith(object : DisposableSingleObserver<List<Launches?>>() {
-                    override fun onSuccess(res: List<Launches?>) {
+                .subscribeWith(object : DisposableSingleObserver<List<Launches>>() {
+                    override fun onSuccess(res: List<Launches>) {
                         launchesResponse.value =
                             ResponseUtil.succeed(LaunchesResponse(error = null,launchItems = res), isFirst = isFirst)
                     }

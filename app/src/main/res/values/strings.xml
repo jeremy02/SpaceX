@@ -20,4 +20,14 @@
     <string name="filter_dialog_sort_caption">Sort By</string>
     <string name="filter_dialog_sort_on">Newest first</string>
     <string name="filter_dialog_sort_off">Oldest first</string>
+
+    <string name="no_launches_found">Oops! No launches found…</string>
+    <string name="no_launches_found_tip">Refresh or reset your filter options to view launches.</string>
+    <string name="string_ok">OK</string>
+
+    <string name="api_fail_error">Something went wrong. Please try again.</string>
+    <string name="api_network_error">Oops! No Internet Connection…</string>
+    <string name="simple_ok_string">OK</string>
+    <string name="error_ongoing_process">Currently fetching launches…Please wait</string>
+
 </resources>
