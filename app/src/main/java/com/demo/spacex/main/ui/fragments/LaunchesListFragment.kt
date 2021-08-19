@@ -2,13 +2,15 @@ package com.demo.spacex.main.ui.fragments
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
@@ -24,6 +26,7 @@ import com.demo.spacex.network.utils.Status
 import kotlinx.android.synthetic.main.error_message.*
 import kotlinx.android.synthetic.main.fragment_launches_list.*
 import kotlinx.android.synthetic.main.progress_bar.*
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -51,6 +54,7 @@ class LaunchesListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -61,9 +65,12 @@ class LaunchesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.buttonFirst.setOnClickListener {
-//            findNavController().navigate(R.id.action_LaunchesListFragment_to_SecondFragment)
-//        }
+        val activity = activity as AppCompatActivity?
+        activity?.setSupportActionBar(binding.toolbar)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        view.findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
 
         // handle response from getting launches
         mainViewModel.launchesLiveData().observe(viewLifecycleOwner, { handleResponse(it) })
@@ -235,6 +242,31 @@ class LaunchesListFragment : Fragment() {
                 }, 3000)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_filter -> {
+                showFilterDialog()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    // show the filter and sort dialog
+    private fun showFilterDialog() {
+        val manager: FragmentManager = childFragmentManager
+        val filterDialog = FilterDialogFragment()
+        filterDialog.show(manager, getString(R.string.filter_dialog_title))
     }
 
     override fun onDestroyView() {

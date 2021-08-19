@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -42,39 +40,18 @@ class MainActivity : AppCompatActivity() {
         // handle response
         // mainViewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
 
+        /*
+            Please note you can call the bewlo commented functions from the main activity
+            This ensures that we call the functions only once instead of every time the fragments are created
+         */
         // get the company info
-        mainViewModel.getCompanyInfo(true)
+        // mainViewModel.getCompanyInfo(true)
 
         // call the api to get the launches by setting this variable to true
         // this can also be called in the fragment from which we observe the launches live data
         // filterViewModel.callLaunchesApiFunction(true)
     }
 
-    // show the filter and sort dialog
-    private fun showFilterDialog() {
-        val manager: FragmentManager = supportFragmentManager
-        val filterDialog = FilterDialogFragment()
-        filterDialog.show(manager, getString(R.string.filter_dialog_title))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_filter -> {
-                showFilterDialog()
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)

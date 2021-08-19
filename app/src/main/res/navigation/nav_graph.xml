@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.demo.spacex.SecondFragment"
+        android:name="com.demo.spacex.main.ui.fragments.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
