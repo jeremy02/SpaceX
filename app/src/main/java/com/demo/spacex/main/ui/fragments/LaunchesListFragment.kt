@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
@@ -221,7 +222,8 @@ class LaunchesListFragment : Fragment() {
         mLaunchesAdapter.onItemClick = { _view:View, _position:Int, _launchObj:Launches ->
             // show the launch item detail
             if(adapterClickable) {
-                Log.e(TAG, "Launch is clicked $_launchObj")
+                mainViewModel.selectLaunchItem(_launchObj)
+                findNavController().navigate(R.id.action_LaunchesListFragment_to_SecondFragment)
             } else {
                 switchStateUI(View.VISIBLE, View.GONE, View.GONE, true)
                 error_message.text = getString(R.string.error_ongoing_process)

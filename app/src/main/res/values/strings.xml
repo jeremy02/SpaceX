@@ -30,4 +30,7 @@
     <string name="simple_ok_string">OK</string>
     <string name="error_ongoing_process">Currently fetching launches…Please wait</string>
 
+    <string name="launch_upcoming">Upcoming</string>
+    <string name="launch_success">Launched Successfully</string>
+    <string name="launch_failed">Launched Failed</string>
 </resources>

@@ -1,27 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.ui.fragments.LaunchesListFragment"
+    tools:ignore="MissingPrefix,RtlCompat,UselessParent,RtlSymmetry,RtlHardcoded,HardcodedText,UnusedAttribute,RelativeOverlap,ContentDescription">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:padding="@dimen/dimen_10">
+
+            <LinearLayout
+                android:id="@+id/mission_top_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:id="@+id/imageView"
+                    android:alpha="0.4"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/ic_rocket"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/dimen_10">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/upcoming_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        app:chipMinHeight="@dimen/dimen_36"
+                        app:iconStartPadding="@dimen/dimen_4"
+                        android:text="@string/launch_upcoming"
+                        android:textSize="@dimen/text_size_16"
+                        app:chipIcon="@drawable/ic_action_check"
+                        android:textColor="@color/text_color_gray_dark"
+                        app:chipIconTint="@color/text_color_gray_dark"
+                        style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/rocket_name_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:text="Rocket Name"
+                        app:chipMinHeight="@dimen/dimen_36"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/text_color_gray_dark"
+                        style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/launch_success_chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        app:chipMinHeight="@dimen/dimen_36"
+                        app:iconStartPadding="@dimen/dimen_4"
+                        android:text="@string/launch_success"
+                        android:textSize="@dimen/text_size_16"
+                        app:chipIcon="@drawable/ic_action_check"
+                        android:textColor="@color/text_color_gray_dark"
+                        app:chipIconTint="@color/text_color_gray_dark"
+                        style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</layout>

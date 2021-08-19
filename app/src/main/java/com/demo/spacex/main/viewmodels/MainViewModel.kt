@@ -1,6 +1,7 @@
 package com.demo.spacex.main.viewmodels
 
 import android.app.Application
+import android.content.ClipData
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,13 +29,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val companyInfoResponse = MutableLiveData<ResponseUtil<CompanyInfo>>()
     fun companyInfoLiveData(): LiveData<ResponseUtil<CompanyInfo>> = companyInfoResponse
 
-//    // used in getting the launches info
-//    private val launchesResponse = MutableLiveData<ResponseUtil<List<Launches>>>()
-//    fun launchesLiveData(): LiveData<ResponseUtil<List<Launches>>> = launchesResponse
-
     // used in getting the launches info
     private val launchesResponse = MutableLiveData<ResponseUtil<LaunchesResponse>>()
     fun launchesLiveData(): LiveData<ResponseUtil<LaunchesResponse>> = launchesResponse
+
+    // used in setting the clicked launch
+    private val mutableSelectedLaunchItem = MutableLiveData<Launches>()
+    val selectedLaunchItem: LiveData<Launches> get() = mutableSelectedLaunchItem
 
     // call the api call to get company info
     fun getCompanyInfo(isFirst: Boolean) {
@@ -112,6 +113,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 })
         )
+    }
+
+    // setting the selected launch item to view in detail
+    fun selectLaunchItem(selectedItem: Launches) {
+        mutableSelectedLaunchItem.value = selectedItem
     }
 
     override fun onCleared() {
