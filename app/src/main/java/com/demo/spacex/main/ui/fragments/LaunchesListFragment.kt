@@ -3,14 +3,12 @@ package com.demo.spacex.main.ui.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
@@ -19,19 +17,22 @@ import com.demo.spacex.main.ui.adapters.LaunchesAdapter
 import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.FilterItem
+import com.demo.spacex.models.company_info.CompanyInfo
 import com.demo.spacex.models.launch_info.Launches
 import com.demo.spacex.models.launch_info.LaunchesResponse
 import com.demo.spacex.network.utils.ResponseUtil
 import com.demo.spacex.network.utils.Status
 import kotlinx.android.synthetic.main.error_message.*
+import kotlinx.android.synthetic.main.fragment_launch_details.*
 import kotlinx.android.synthetic.main.fragment_launches_list.*
+import kotlinx.android.synthetic.main.fragment_launches_list.toolbar
 import kotlinx.android.synthetic.main.progress_bar.*
 
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class LaunchesListFragment : Fragment() {
+class LaunchesListFragment : BaseFragment() {
 
     private val TAG: String = LaunchesListFragment::class.java.simpleName
 
@@ -52,6 +53,15 @@ class LaunchesListFragment : Fragment() {
     // make the adapter unclickable until finished with loading launches
     private var adapterClickable: Boolean = false
 
+    // we use this to not call the company info and get launches
+    // api if they had been called before
+    protected var onCreateViewCalled = false
+
+    fun hasOnCreateViewBeenCalled(): Boolean {
+        return onCreateViewCalled
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -65,18 +75,18 @@ class LaunchesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // setup toolbar
         val activity = activity as AppCompatActivity?
-        activity?.setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        view.findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
-
-        // handle response from getting launches
-        mainViewModel.launchesLiveData().observe(viewLifecycleOwner, { handleResponse(it) })
+        activity?.setSupportActionBar(toolbar)
 
         // initialize the views
         initViews()
+
+        // handle response from getting company info
+        mainViewModel.companyInfoLiveData().observe(viewLifecycleOwner, { handleCompanyInfoResponse(it) })
+
+        // handle response from getting launches
+        mainViewModel.launchesLiveData().observe(viewLifecycleOwner, { handleResponse(it) })
 
         // observe callFilterSortFunctionLiveData to check if we need to call the api function
         filterViewModel.callLaunchesApiFunctionLiveData.observe(viewLifecycleOwner, {
@@ -99,12 +109,20 @@ class LaunchesListFragment : Fragment() {
             }
         })
 
-        // call the api to get the launches by setting this variable to true
-        filterViewModel.callLaunchesApiFunction(true)
+        // had the view been created before?
+        // had we experienced an error in calling the company info api and therefore its view is not displayed?
+        if(!hasOnCreateViewBeenCalled() || !company_title_layout.isShown){
+            onCreateViewCalled = true
+
+            mainViewModel.getCompanyInfo(true) // get the company info
+
+            filterViewModel.callLaunchesApiFunction(true) // call the api to get the launches by setting this variable to true
+        }
     }
 
     // initialize the views
     private fun initViews() {
+        company_title_layout.visibility = View.GONE
         progress_bar_container.visibility = View.GONE
         error_container.visibility = View.GONE
         no_launches_found.visibility = View.GONE
@@ -124,10 +142,45 @@ class LaunchesListFragment : Fragment() {
             filterViewModel.callLaunchesApiFunction(true) // get the launches by setting this value to true
         }
 
-        // initialize the recyclerview
-        initRecyclerView()
+        initRecyclerView() // initialize the recyclerview
     }
 
+
+    // handle getting company info response
+    private fun handleCompanyInfoResponse(res: ResponseUtil<CompanyInfo>?) {
+        res?.let {
+            when (it.status) {
+                Status.LOADING -> {
+
+                }
+
+                Status.REFRESHING -> {
+
+                }
+
+                Status.EMPTY -> {
+
+                }
+
+                Status.SUCCEED -> {
+                    if(res.data?.summary != null) {
+                        company_title_layout.visibility = View.VISIBLE
+                        company_description_text_view.text = res.data.summary
+                    }
+                }
+
+                Status.FAILED -> {
+
+                }
+
+                Status.NO_CONNECTION -> {
+
+                }
+            }
+        }
+    }
+
+    // handle getting launches response
     private fun handleResponse(res: ResponseUtil<LaunchesResponse>?) {
         swipe_to_refresh_layout.isRefreshing = false
 
@@ -188,7 +241,7 @@ class LaunchesListFragment : Fragment() {
         launches_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (recyclerView.getChildAt(0) != null) {
-                    binding.swipeToRefreshLayout.isEnabled = (linearlayoutManager.findFirstVisibleItemPosition() == 0
+                    swipe_to_refresh_layout.isEnabled = (linearlayoutManager.findFirstVisibleItemPosition() == 0
                             && recyclerView.getChildAt(0).top == 0)
                 }
             }
@@ -230,7 +283,7 @@ class LaunchesListFragment : Fragment() {
             // show the launch item detail
             if(adapterClickable) {
                 mainViewModel.selectLaunchItem(_launchObj)
-                findNavController().navigate(R.id.action_LaunchesListFragment_to_SecondFragment)
+                findNavController().navigate(R.id.action_LaunchesListFragment_to_LaunchDetailsFragment)
             } else {
                 switchStateUI(View.VISIBLE, View.GONE, View.GONE, true)
                 error_message.text = getString(R.string.error_ongoing_process)

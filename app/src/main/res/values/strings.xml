@@ -4,14 +4,16 @@
     <string name="action_settings">Settings</string>
     <string name="action_filter">Filter</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">SpaceX</string>
+    <string name="second_fragment_label">Launch Details</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="company_title">Company</string>
+    <string name="launches_title">Launches</string>
     <string name="filter_dialog_title">Filter Launches</string>
     <string name="filter_dialog_cancel">Cancel</string>
     <string name="filter_dialog_filter">Filter</string>
@@ -38,7 +40,7 @@
     <string name="launch_name">Launch Name</string>
     <string name="launch_time">Launch time:</string>
     <string name="launch_site">Launch site:    </string>
-    <string name="launch_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="launch_video">Watch Video</string>
     <string name="launch_reddit">Reddit</string>
     <string name="launch_read_more">Read More</string>

@@ -19,10 +19,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.demo.spacex.R
-import com.demo.spacex.databinding.FragmentSecondBinding
+import com.demo.spacex.databinding.FragmentLaunchDetailsBinding
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.launch_info.Launches
-import kotlinx.android.synthetic.main.fragment_second.*
+import kotlinx.android.synthetic.main.fragment_launch_details.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,9 +31,9 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class LaunchDetailsFragment : BaseFragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentLaunchDetailsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,7 +47,7 @@ class SecondFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentLaunchDetailsBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -55,19 +55,16 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // setup toolbar
         val activity = activity as AppCompatActivity?
-        activity?.setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        view.findViewById<Toolbar>(R.id.toolbar).setupWithNavController(navController, appBarConfiguration)
+        activity?.setSupportActionBar(toolbar)
 
         mainViewModel.selectedLaunchItem.observe(viewLifecycleOwner, {
             // Update the UI
             if(it != null) {
                 updateUI(it)
             }else{
-                findNavController().navigate(R.id.action_SecondFragment_to_LaunchesListFragment)
+                findNavController().navigate(R.id.action_LaunchDetailsFragment_to_LaunchesListFragment)
             }
         })
     }

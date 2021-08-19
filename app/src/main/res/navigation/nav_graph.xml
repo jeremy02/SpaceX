@@ -12,19 +12,19 @@
         tools:layout="@layout/fragment_launches_list">
 
         <action
-            android:id="@+id/action_LaunchesListFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_LaunchesListFragment_to_LaunchDetailsFragment"
+            app:destination="@id/LaunchDetailsFragment" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.demo.spacex.main.ui.fragments.SecondFragment"
+        android:id="@+id/LaunchDetailsFragment"
+        android:name="com.demo.spacex.main.ui.fragments.LaunchDetailsFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
         <action
-            android:id="@+id/action_SecondFragment_to_LaunchesListFragment"
+            android:id="@+id/action_LaunchDetailsFragment_to_LaunchesListFragment"
             app:destination="@id/LaunchesListFragment" />
     </fragment>
 </navigation>

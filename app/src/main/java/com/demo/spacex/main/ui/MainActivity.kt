@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         // mainViewModel.companyInfoLiveData().observe(this, { this@MainActivity.handleResponse(it) })
 
         /*
-            Please note you can call the bewlo commented functions from the main activity
+            Please note you can call the below commented functions from the main activity
             This ensures that we call the functions only once instead of every time the fragments are created
          */
         // get the company info
@@ -50,6 +50,18 @@ class MainActivity : AppCompatActivity() {
         // call the api to get the launches by setting this variable to true
         // this can also be called in the fragment from which we observe the launches live data
         // filterViewModel.callLaunchesApiFunction(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return super.onOptionsItemSelected(item)
     }
 
 

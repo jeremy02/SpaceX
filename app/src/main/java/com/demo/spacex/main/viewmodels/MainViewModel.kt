@@ -48,7 +48,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 .subscribeWith(object : DisposableSingleObserver<CompanyInfo?>() {
                     override fun onSuccess(res: CompanyInfo) {
-//                        Log.e(TAG, res.toString())
+                        companyInfoResponse.value =
+                            ResponseUtil.succeed(res, isFirst = isFirst)
                     }
 
                     override fun onError(e: Throwable) {

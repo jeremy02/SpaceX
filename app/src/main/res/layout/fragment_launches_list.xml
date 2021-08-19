@@ -19,7 +19,7 @@
             android:theme="@style/Theme.SpaceX.AppBarOverlay"
             app:popupTheme="@style/Theme.SpaceX.PopupOverlay" />
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
@@ -36,21 +36,69 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_to_refresh_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/company_title_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_alignParentTop="true">
+
+                        <TextView
+                            android:id="@+id/company_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/dimen_10"
+                            android:background="@color/black"
+                            android:text="@string/company_title"
+                            android:textSize="@dimen/text_size_16"
+                            android:gravity="start|center_vertical" />
+
+                        <TextView
+                            android:id="@+id/company_description_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="6"
+                            android:ellipsize="end"
+                            android:scrollHorizontally="true"
+                            android:padding="@dimen/dimen_10"
+                            android:text="@string/lorem_ipsum"
+                            android:lineSpacingMultiplier="1.26"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/text_color_gray_dark"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/launches_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/dimen_10"
+                        android:background="@color/black"
+                        android:text="@string/launches_title"
+                        android:textSize="@dimen/text_size_16"
+                        android:gravity="start|center_vertical"
+                        android:layout_below="@+id/company_title_layout" />
+
+                    <!--Related to listing launches-->
+                    <LinearLayout
                         android:id="@+id/no_launches_found"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:orientation="vertical"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center_vertical">
+                        android:padding="@dimen/dimen_16"
+                        android:layout_below="@+id/launches_title_text_view">
 
                         <ImageView
                             android:layout_width="100dp"
@@ -86,13 +134,14 @@
                         android:layout_height="match_parent"
                         android:visibility="gone"
                         tools:listitem="@layout/item_launch"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_below="@+id/launches_title_text_view"/>
 
                 </RelativeLayout>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </RelativeLayout>
 

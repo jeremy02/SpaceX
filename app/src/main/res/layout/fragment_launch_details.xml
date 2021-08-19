@@ -1,27 +1,384 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".main.ui.fragments.SecondFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.ui.fragments.LaunchesListFragment"
+    tools:ignore="MissingPrefix,RtlCompat,UselessParent,RtlSymmetry,RtlHardcoded,HardcodedText,UnusedAttribute,RelativeOverlap,ContentDescription">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/Theme.SpaceX.AppBarOverlay"
+            app:popupTheme="@style/Theme.SpaceX.PopupOverlay" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:layout_below="@+id/toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:padding="@dimen/dimen_10">
+
+                <LinearLayout
+                    android:id="@+id/launch_top_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentTop="true">
+
+                    <ImageView
+                        android:id="@+id/launch_image_view"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:alpha="0.4"
+                        android:visibility="visible"
+                        android:scaleType="centerCrop"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_rocket"
+                        android:layout_marginEnd="@dimen/dimen_10"/>
+
+                    <RelativeLayout
+                        android:id="@+id/launch_top_content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/launch_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/launch_date"
+                            android:layout_alignParentTop="true"
+                            android:textSize="@dimen/text_size_20"
+                            android:textColor="@color/text_color_gray"
+                            style="@style/TextAppearance.AppCompat.Title"/>
+
+                        <TextView
+                            android:id="@+id/launch_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/launch_name"
+                            android:textColor="@color/black"
+                            android:layout_below="@+id/launch_date"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:layout_marginBottom="@dimen/dimen_10"
+                            style="@style/TextAppearance.AppCompat.Headline"/>
+
+                        <RelativeLayout
+                            android:id="@+id/launch_time_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/launch_name"
+                            android:layout_marginTop="@dimen/dimen_16"
+                            android:layout_marginBottom="@dimen/dimen_4">
+
+                            <TextView
+                                android:id="@+id/launch_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:text="@string/launch_time"
+                                android:textStyle="bold"
+                                android:layout_alignParentStart="true"
+                                android:textSize="@dimen/text_size_14"/>
+
+                            <TextView
+                                android:id="@+id/launch_time_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/launch_time"
+                                android:textSize="@dimen/text_size_14"
+                                android:layout_toEndOf="@+id/launch_time"
+                                android:layout_marginLeft="@dimen/dimen_4"
+                                style="@style/TextAppearance.AppCompat.Small"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/launch_site_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/launch_time_layout"
+                            android:layout_marginBottom="@dimen/dimen_4">
+
+                            <TextView
+                                android:id="@+id/launch_site"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:text="@string/launch_site"
+                                android:textStyle="bold"
+                                android:layout_alignParentStart="true"
+                                android:textSize="@dimen/text_size_14"/>
+
+                            <TextView
+                                android:id="@+id/launch_site_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/launch_time"
+                                android:textSize="@dimen/text_size_14"
+                                android:layout_toEndOf="@+id/launch_site"
+                                android:layout_marginLeft="@dimen/dimen_4"/>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/launch_chips_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/launch_top_layout">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:background="@color/text_color_gray_light"/>
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/upcoming_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="visible"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            app:iconStartPadding="@dimen/dimen_4"
+                            android:text="@string/launch_upcoming"
+                            android:textSize="@dimen/text_size_16"
+                            app:chipIcon="@drawable/ic_action_check"
+                            android:textColor="@color/text_color_gray_dark"
+                            app:chipIconTint="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/rocket_name_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:text="Rocket Name"
+                            android:visibility="visible"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/landing_type_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:text="Landing Type"
+                            android:visibility="visible"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/orbit_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:text="Orbit"
+                            android:visibility="gone"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/block_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:text="Block"
+                            android:visibility="visible"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/launch_success_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="visible"
+                            app:chipMinHeight="@dimen/dimen_36"
+                            app:iconStartPadding="@dimen/dimen_4"
+                            android:text="@string/launch_success"
+                            android:textSize="@dimen/text_size_16"
+                            app:chipIcon="@drawable/ic_action_check"
+                            android:textColor="@color/text_color_gray_dark"
+                            app:chipIconTint="@color/text_color_gray_dark"
+                            style="@style/Widget.MaterialComponents.Chip.Action" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:background="@color/text_color_gray_light"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_4"
+                        android:layout_marginStart="@dimen/dimen_4">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/launch_youtube_button"
+                            android:layout_width="@dimen/dimen_48"
+                            android:layout_height="@dimen/dimen_48"
+                            app:elevation="4dp"
+                            android:insetTop="0dp"
+                            android:insetLeft="0dp"
+                            app:cornerRadius="30dp"
+                            app:strokeWidth="0.8dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:iconTint="@color/color_red"
+                            app:iconPadding="@dimen/dimen_16"
+                            app:rippleColor="@color/light_grey"
+                            android:backgroundTint="@color/white"
+                            app:icon="@drawable/ic_action_youtube"
+                            android:layout_alignParentStart="true"
+                            app:strokeColor="@color/text_color_gray_light"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+
+                        <TextView
+                            android:id="@+id/launch_youtube_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/text_size_14"
+                            android:text="@string/launch_video"
+                            android:layout_marginEnd="@dimen/dimen_8"
+                            android:layout_marginStart="@dimen/dimen_8"
+                            android:textColor="@color/text_color_gray_dark"
+                            android:layout_toEndOf="@+id/launch_youtube_button"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/launch_reddit_button"
+                            android:layout_width="@dimen/dimen_48"
+                            android:layout_height="@dimen/dimen_48"
+                            app:elevation="4dp"
+                            android:insetTop="0dp"
+                            android:insetLeft="0dp"
+                            app:cornerRadius="30dp"
+                            app:strokeWidth="0.8dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            app:iconTint="@color/black"
+                            app:rippleColor="@color/light_grey"
+                            app:iconPadding="@dimen/dimen_16"
+                            app:icon="@drawable/ic_action_reddit"
+                            android:backgroundTint="@color/white"
+                            android:layout_marginEnd="@dimen/dimen_8"
+                            android:layout_marginStart="@dimen/dimen_8"
+                            app:strokeColor="@color/text_color_gray_light"
+                            android:layout_toEndOf="@+id/launch_youtube_text_view"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"/>
+
+                        <TextView
+                            android:id="@+id/launch_reddit_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/text_size_14"
+                            android:text="@string/launch_reddit"
+                            android:textColor="@color/text_color_gray_dark"
+                            android:layout_toEndOf="@+id/launch_reddit_button"/>
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:background="@color/text_color_gray_light"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/launch_description_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dimen_8"
+                    android:paddingBottom="@dimen/dimen_8"
+                    android:layout_below="@+id/launch_chips_layout">
+
+                    <TextView
+                        android:id="@+id/launch_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="end"
+                        android:maxLines="6"
+                        android:text="@string/lorem_ipsum"
+                        android:layout_alignParentTop="true"
+                        android:lineSpacingMultiplier="1.26"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/launch_read_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        app:iconGravity="end"
+                        android:textAllCaps="false"
+                        app:rippleColor="@color/white"
+                        app:cornerRadius="@dimen/dimen_8"
+                        android:layout_centerInParent="true"
+                        android:text="@string/launch_read_more"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:backgroundTint="@color/purple_200"
+                        app:icon="@drawable/ic_action_arrow_forward"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:layout_below="@+id/launch_description"
+                        style="@style/Widget.MaterialComponents.Button"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>
