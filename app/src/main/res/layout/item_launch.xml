@@ -9,7 +9,7 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         android:padding="@dimen/dimen_16"
-        android:background="@drawable/ripple_bg"
+        android:background="@color/color_red"
         android:layout_marginBottom="@dimen/dimen_16">
 
     </LinearLayout>

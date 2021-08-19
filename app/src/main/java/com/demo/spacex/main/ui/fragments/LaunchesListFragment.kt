@@ -141,6 +141,7 @@ class LaunchesListFragment : Fragment() {
                 }
 
                 Status.SUCCEED -> {
+                    adapterClickable = true // adapter clickable
                     if(res.data?.launchItems != null && res.data.launchItems.isNotEmpty()) {
                         refreshAdapter(res.data.launchItems) // refresh the adapter
                         switchStateUI(View.GONE, View.GONE, View.GONE, false)

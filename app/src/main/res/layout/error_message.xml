@@ -7,7 +7,7 @@
         android:id="@+id/error_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:padding="@dimen/dimen_16"
         android:background="@color/color_red">
