@@ -49,5 +49,6 @@
     <string name="launch_list_name">Mission:&#160;&#160;&#160;&#160;&#160;</string>
     <string name="launch_list_date_time">Date/time:&#160;</string>
     <string name="launch_list_rocket">Rocket:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="launch_list_days">Days:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
 </resources>

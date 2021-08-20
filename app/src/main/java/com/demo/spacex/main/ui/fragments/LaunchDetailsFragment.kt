@@ -21,6 +21,7 @@ import com.demo.spacex.main.ui.adapters.LaunchGalleryAdapter
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.launch_info.Launches
 import kotlinx.android.synthetic.main.fragment_launch_details.*
+import kotlinx.android.synthetic.main.fragment_launch_details.view.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,7 +40,7 @@ class LaunchDetailsFragment : BaseFragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private val itemAdapter by lazy {
+    private val launchImagesAdapter by lazy {
         LaunchGalleryAdapter { position: Int, item: String ->
             launch_gallery_list.smoothScrollToPosition(position)
         }
@@ -76,7 +77,12 @@ class LaunchDetailsFragment : BaseFragment() {
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun updateUI(res: Launches) {
         // set the launch name
-        launch_name.text = res.missionName
+        if(res.missionName != null) {
+            launch_name.text = res.missionName
+        }else{
+            // set the launch name
+            launch_name.text = ""
+        }
 
         // show image
         if(res.links != null) {
@@ -108,7 +114,7 @@ class LaunchDetailsFragment : BaseFragment() {
                 launch_date.text = formattedDate
             } catch (e: ParseException) {
                 e.printStackTrace()
-                launch_date.text = String.format(requireContext().getString(R.string.launch_date), res.launchYear)
+                launch_date.text = res.launchYear
             }
 
             // set the launch time
@@ -124,7 +130,11 @@ class LaunchDetailsFragment : BaseFragment() {
         }
 
         // set the launch site name
-        launch_site_name.text = res.launchSite?.siteNameLong
+        if(res.launchSite?.siteNameLong != null) {
+            launch_site_name.text = res.launchSite?.siteNameLong
+        }else{
+            launch_site_name.text = ""
+        }
 
         // update the upcoming chip icon
         if(res.upcoming != null){
@@ -139,7 +149,11 @@ class LaunchDetailsFragment : BaseFragment() {
         }
 
         // update the rocket's name chip
-        rocket_name_chip.text = res.rocket?.rocketName
+        if(res.launchSite?.siteNameLong != null) {
+            rocket_name_chip.text = res.rocket?.rocketName
+        }else{
+            rocket_name_chip.text = ""
+        }
 
         // update the launch_success_chip
         if(res.launchSuccess != null){
@@ -199,9 +213,9 @@ class LaunchDetailsFragment : BaseFragment() {
                 launch_gallery_layout.visibility = View.GONE
             }else{
                 launch_gallery_layout.visibility = View.VISIBLE
-                launch_gallery_list.initialize(itemAdapter)
+                launch_gallery_list.initialize(launchImagesAdapter)
                 launch_gallery_list.setViewsToChangeColor(listOf(R.id.list_item_background))
-                itemAdapter.setItems(getListOfLaunchImageItems(res.links?.flickrImages as MutableList<String>))
+                launchImagesAdapter.setItems(getListOfLaunchImageItems(res.links?.flickrImages as MutableList<String>))
             }
         }else{
             launch_gallery_layout.visibility = View.GONE

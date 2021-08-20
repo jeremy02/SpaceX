@@ -4,124 +4,170 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="RtlCompat,ContentDescription,RtlHardcoded,HardcodedText">
 
-    <RelativeLayout
-        android:id="@+id/parent_layout"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/list_item_icon_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_12"
-        android:paddingLeft="@dimen/dimen_6"
-        android:paddingRight="@dimen/dimen_6"
-        android:paddingBottom="@dimen/dimen_12"
-        android:background="@drawable/ripple_bg"
-        android:layout_marginBottom="@dimen/dimen_16">
-
-        <ImageView
-            android:id="@+id/launch_image_view"
-            android:layout_width="@dimen/dimen_48"
-            android:layout_height="@dimen/dimen_64"
-            android:alpha="0.4"
-            android:visibility="visible"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_rocket"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/dimen_6" />
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/dimen_2"
+        app:cardCornerRadius="@dimen/dimen_6"
+        app:cardBackgroundColor="@color/cardview_light_background">
 
         <RelativeLayout
-            android:id="@+id/launch_content_layout"
+            android:id="@+id/parent_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@+id/launch_image_view"
-            android:layout_toRightOf="@+id/launch_image_view">
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_12">
 
-            <LinearLayout
-                android:id="@+id/launch_name_layout"
+            <ImageView
+                android:id="@+id/launch_image_view"
+                android:layout_width="@dimen/dimen_48"
+                android:layout_height="@dimen/dimen_64"
+                android:alpha="0.4"
+                android:visibility="visible"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_rocket"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/dimen_6" />
+
+            <RelativeLayout
+                android:id="@+id/launch_content_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentTop="true">
+                android:orientation="vertical"
+                android:layout_toEndOf="@+id/launch_image_view"
+                android:layout_toRightOf="@+id/launch_image_view">
 
-                <TextView
-                    android:id="@+id/launch_time_name_caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:text="@string/launch_list_name"
-                    android:layout_marginLeft="@dimen/dimen_4"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_light"/>
-
-                <TextView
-                    android:id="@+id/launch_time_name_"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:text="{mission}"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_dark"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/launch_date_time_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/launch_name_layout">
-
-                <TextView
-                    android:id="@+id/launch_date_time_caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:layout_marginLeft="@dimen/dimen_4"
-                    android:text="@string/launch_list_date_time"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_light"/>
-
-                <TextView
-                    android:id="@+id/launch_date_time"
+                <LinearLayout
+                    android:id="@+id/launch_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:text="{date} at {time}"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_dark"/>
+                    android:orientation="horizontal"
+                    android:layout_alignParentTop="true">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/launch_time_name_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="@string/launch_list_name"
+                        android:layout_marginLeft="@dimen/dimen_4"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_light"/>
 
-            <LinearLayout
-                android:id="@+id/launch_rocket_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/launch_date_time_layout">
+                    <TextView
+                        android:id="@+id/launch_time_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="{mission}"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_dark"/>
 
-                <TextView
-                    android:id="@+id/launch_rocket_caption"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:layout_marginLeft="@dimen/dimen_4"
-                    android:text="@string/launch_list_rocket"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_light"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/launch_rocket_time"
+                <LinearLayout
+                    android:id="@+id/launch_date_time_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_14"
-                    android:text="{name} at {type}"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/text_color_gray_dark"/>
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/launch_name_layout">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/launch_date_time_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginLeft="@dimen/dimen_4"
+                        android:text="@string/launch_list_date_time"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_light"/>
+
+                    <TextView
+                        android:id="@+id/launch_date_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="{date} at {time}"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/launch_rocket_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/launch_date_time_layout">
+
+                    <TextView
+                        android:id="@+id/launch_rocket_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:layout_marginLeft="@dimen/dimen_4"
+                        android:text="@string/launch_list_rocket"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_light"/>
+
+                    <TextView
+                        android:id="@+id/launch_rocket_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="{name} at {type}"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/launch_days_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/launch_rocket_layout">
+
+                    <TextView
+                        android:id="@+id/launch_days_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="@string/launch_list_days"
+                        android:layout_marginLeft="@dimen/dimen_4"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_light"/>
+
+                    <TextView
+                        android:id="@+id/launch_days_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_14"
+                        android:text="{since} at {ago}"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/launch_icon_view"
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_action_check"
+                    app:tint="@color/black"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dimen_6" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>

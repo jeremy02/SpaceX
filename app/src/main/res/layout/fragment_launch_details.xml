@@ -399,7 +399,7 @@
                         android:layout_margin="@dimen/dimen_8"
                         android:textColor="@color/text_color_gray_dark"/>
 
-                    <com.demo.spacex.main.HorizontalCarouselRecyclerView
+                    <com.demo.spacex.main.custom_views.ImagesCarouselRecyclerView
                         android:id="@+id/launch_gallery_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

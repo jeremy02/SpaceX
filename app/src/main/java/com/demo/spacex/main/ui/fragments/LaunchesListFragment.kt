@@ -57,7 +57,7 @@ class LaunchesListFragment : BaseFragment() {
     // api if they had been called before
     protected var onCreateViewCalled = false
 
-    fun hasOnCreateViewBeenCalled(): Boolean {
+    private fun hasOnCreateViewBeenCalled(): Boolean {
         return onCreateViewCalled
     }
 

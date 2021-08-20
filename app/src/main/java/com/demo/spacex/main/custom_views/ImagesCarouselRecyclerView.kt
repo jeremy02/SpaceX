@@ -1,4 +1,4 @@
-package com.demo.spacex.main
+package com.demo.spacex.main.custom_views
 
 import android.animation.ArgbEvaluator
 import android.content.Context
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
 
-class HorizontalCarouselRecyclerView(
+class ImagesCarouselRecyclerView(
     context: Context,
     attrs: AttributeSet
 ) : RecyclerView(context, attrs) {
