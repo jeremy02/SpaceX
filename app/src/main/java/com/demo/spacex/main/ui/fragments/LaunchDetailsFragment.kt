@@ -10,16 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FragmentLaunchDetailsBinding
+import com.demo.spacex.main.ui.adapters.LaunchGalleryAdapter
 import com.demo.spacex.main.viewmodels.MainViewModel
 import com.demo.spacex.models.launch_info.Launches
 import kotlinx.android.synthetic.main.fragment_launch_details.*
@@ -40,6 +38,12 @@ class LaunchDetailsFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val mainViewModel: MainViewModel by activityViewModels()
+
+    private val itemAdapter by lazy {
+        LaunchGalleryAdapter { position: Int, item: String ->
+            launch_gallery_list.smoothScrollToPosition(position)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,6 +191,27 @@ class LaunchDetailsFragment : BaseFragment() {
         launch_read_more.setOnClickListener {
             openUrl(res.links?.articleLink)
         }
+
+        // show the gallery of the launch
+        if(res.links?.flickrImages != null) {
+            // show the images
+            if(res.links?.flickrImages.isNullOrEmpty()) {
+                launch_gallery_layout.visibility = View.GONE
+            }else{
+                launch_gallery_layout.visibility = View.VISIBLE
+                launch_gallery_list.initialize(itemAdapter)
+                launch_gallery_list.setViewsToChangeColor(listOf(R.id.list_item_background))
+                itemAdapter.setItems(getListOfLaunchImageItems(res.links?.flickrImages as MutableList<String>))
+            }
+        }else{
+            launch_gallery_layout.visibility = View.GONE
+        }
+    }
+
+    private fun getListOfLaunchImageItems(flickrImages: MutableList<String>): List<String> {
+        val items = mutableListOf<String>()
+        (0..40).map { items.add(flickrImages.random()) }
+        return items
     }
 
     private fun openUrl(url: String?) {

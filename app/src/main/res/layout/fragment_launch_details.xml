@@ -20,7 +20,7 @@
             android:theme="@style/Theme.SpaceX.AppBarOverlay"
             app:popupTheme="@style/Theme.SpaceX.PopupOverlay" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -375,9 +375,49 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/launch_gallery_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/dimen_16"
+                    android:layout_below="@+id/launch_description_layout">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:background="@color/text_color_gray_light"/>
+
+                    <TextView
+                        android:id="@+id/launch_images_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_16"
+                        android:text="@string/launch_images"
+                        android:layout_margin="@dimen/dimen_8"
+                        android:textColor="@color/text_color_gray_dark"/>
+
+                    <com.demo.spacex.main.HorizontalCarouselRecyclerView
+                        android:id="@+id/launch_gallery_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:layout_gravity="center_vertical"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/dimen_8"
+                        android:layout_marginBottom="@dimen/dimen_8"
+                        android:background="@color/text_color_gray_light"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 

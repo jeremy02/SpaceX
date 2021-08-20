@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.spacex.R
 import com.demo.spacex.models.launch_info.Launches
@@ -23,7 +24,7 @@ class LaunchesAdapter(private val ctx: Context, private val items: MutableList<L
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val parentLayout: LinearLayout = v.findViewById(R.id.parent_layout)
+        val parentLayout: RelativeLayout = v.findViewById(R.id.parent_layout)
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")

@@ -39,10 +39,15 @@
     <string name="launch_date">Launch Date</string>
     <string name="launch_name">Launch Name</string>
     <string name="launch_time">Launch time:</string>
-    <string name="launch_site">Launch site:    </string>
+    <string name="launch_site">Launch site:&#160;&#160;</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="launch_video">Watch Video</string>
     <string name="launch_reddit">Reddit</string>
     <string name="launch_read_more">Read More</string>
+    <string name="launch_images">Sneak Peak of the launch</string>
+
+    <string name="launch_list_name">Mission:&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="launch_list_date_time">Date/time:&#160;</string>
+    <string name="launch_list_rocket">Rocket:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
 
 </resources>

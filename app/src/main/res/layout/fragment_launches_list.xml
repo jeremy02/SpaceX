@@ -66,12 +66,11 @@
                             android:id="@+id/company_description_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLines="6"
+                            android:maxLines="5"
                             android:ellipsize="end"
                             android:scrollHorizontally="true"
                             android:padding="@dimen/dimen_10"
                             android:text="@string/lorem_ipsum"
-                            android:lineSpacingMultiplier="1.26"
                             android:textSize="@dimen/text_size_16"
                             android:textColor="@color/text_color_gray_dark"/>
 
