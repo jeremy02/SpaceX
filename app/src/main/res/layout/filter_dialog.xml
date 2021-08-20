@@ -10,25 +10,51 @@
         android:padding="@dimen/dimen_16"
         android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/filter_dialog_title_text_view"
-            style="@style/TextAppearance.AppCompat.Title"
+        <RelativeLayout
+            android:id="@+id/filter_dialog_title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textSize="@dimen/text_size_16"
-            android:textColor="@android:color/black"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/filter_dialog_title_text_view"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@android:color/black"
+                android:text="@string/filter_dialog_title"
+                android:layout_marginBottom="@dimen/dimen_8" />
+
+            <ImageView
+                android:id="@+id/dialog_cancel_image_view"
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"
+                app:tint="@color/black"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_action_cancel" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/filter_dialog_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_grey"
             android:layout_marginTop="@dimen/dimen_8"
-            android:text="@string/filter_dialog_title"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dimen_8" />
+            android:layout_below="@+id/filter_dialog_title_layout"/>
 
         <RelativeLayout
             android:id="@+id/filter_dialog_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/filter_dialog_title_text_view">
+            android:layout_below="@+id/filter_dialog_view">
 
             <LinearLayout
                 android:id="@+id/start_date_layout"
@@ -162,14 +188,14 @@
 
                 <TextView
                     android:id="@+id/sort_launches_toggle_caption"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/dimen_4"
                     android:textSize="@dimen/text_size_14"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_10"
-                    android:text="@string/filter_dialog_check_box"
+                    android:text="@string/filter_dialog_sort_order"
                     android:textColor="@color/text_color_gray_dark"/>
 
                 <RadioGroup
@@ -233,7 +259,7 @@
             android:layout_below="@+id/filter_dialog_divider">
 
             <TextView
-                android:id="@+id/dialog_cancel_btn"
+                android:id="@+id/filter_dialog_reset_filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -242,9 +268,9 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_red"
                 android:textSize="@dimen/text_size_14"
-                android:text="@string/filter_dialog_cancel"
                 android:layout_marginRight="@dimen/dimen_10"
-                style="@style/TextAppearance.AppCompat.Caption"/>
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:text="@string/filter_dialog_reset_filter"/>
 
             <View
                 android:layout_width="@dimen/dimen_24"

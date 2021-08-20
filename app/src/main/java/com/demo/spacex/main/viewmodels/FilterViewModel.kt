@@ -13,7 +13,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private val mutableStartDateItem = MutableLiveData<String>()
     val startDate: LiveData<String> get() = mutableStartDateItem
 
-    fun selectStartDate(startDate: String) {
+    fun selectStartDate(startDate: String?) {
         mutableStartDateItem.value = startDate
     }
 
@@ -21,7 +21,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private val mutableEndDateItem = MutableLiveData<String>()
     val endDate: LiveData<String> get() = mutableEndDateItem
 
-    fun selectEndDate(endDate: String) {
+    fun selectEndDate(endDate: String?) {
         mutableEndDateItem.value = endDate
     }
 
@@ -29,7 +29,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private val mutableLaunchSuccessItem = MutableLiveData<Boolean>()
     val launchSuccess: LiveData<Boolean> get() = mutableLaunchSuccessItem
 
-    fun setLaunchSuccess(launchSuccess: Boolean) {
+    fun setLaunchSuccess(launchSuccess: Boolean?) {
         mutableLaunchSuccessItem.value = launchSuccess
     }
 
@@ -37,7 +37,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private val mutableSortOrderItem = MutableLiveData<Boolean>()
     val sortOrder: LiveData<Boolean> get() = mutableSortOrderItem
 
-    fun setSortOrder(sortAsc: Boolean) {
+    fun setSortOrder(sortAsc: Boolean?) {
         mutableSortOrderItem.value = sortAsc
     }
 

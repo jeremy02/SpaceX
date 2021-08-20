@@ -129,7 +129,22 @@ class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListe
         }
 
         // button cancel click
-        binding.dialogCancelBtn.setOnClickListener {
+        binding.dialogCancelImageView.setOnClickListener {
+            dismiss()
+        }
+
+        // button reset click // reset the filters and sort
+        binding.filterDialogResetFilter.setOnClickListener {
+            filterViewModel.selectStartDate(null)
+            filterViewModel.selectEndDate(null)
+            filterViewModel.setLaunchSuccess(null)
+            filterViewModel.setSortOrder(null)
+
+            startDate = null
+            endDate = null
+
+            // should we call the api to fetch launches and dismiss the dialog???
+            filterViewModel.callLaunchesApiFunction(true)
             dismiss()
         }
 

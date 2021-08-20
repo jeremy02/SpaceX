@@ -28,10 +28,6 @@ import kotlinx.android.synthetic.main.fragment_launches_list.*
 import kotlinx.android.synthetic.main.fragment_launches_list.toolbar
 import kotlinx.android.synthetic.main.progress_bar.*
 
-
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class LaunchesListFragment : BaseFragment() {
 
     private val TAG: String = LaunchesListFragment::class.java.simpleName

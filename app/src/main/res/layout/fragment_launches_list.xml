@@ -131,7 +131,7 @@
                         android:id="@+id/launches_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:background="@color/light_grey"
                         tools:listitem="@layout/item_launch"
                         android:layout_marginTop="@dimen/dimen_8"

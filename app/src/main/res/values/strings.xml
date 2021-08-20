@@ -15,11 +15,13 @@
     <string name="company_title">Company</string>
     <string name="launches_title">Launches</string>
     <string name="filter_dialog_title">Filter Launches</string>
+    <string name="filter_dialog_reset_filter">Reset Filters</string>
     <string name="filter_dialog_cancel">Cancel</string>
     <string name="filter_dialog_filter">Filter</string>
     <string name="filter_dialog_start_date">Launch Start Date</string>
     <string name="filter_dialog_end_date">Launch End Date</string>
     <string name="filter_dialog_check_box">Launch Success</string>
+    <string name="filter_dialog_sort_order">Sort Order</string>
     <string name="filter_dialog_sort_caption">Sort By</string>
     <string name="filter_dialog_sort_on">Newest first</string>
     <string name="filter_dialog_sort_off">Oldest first</string>

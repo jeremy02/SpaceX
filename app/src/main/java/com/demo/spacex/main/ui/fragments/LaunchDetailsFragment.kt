@@ -26,10 +26,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class LaunchDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentLaunchDetailsBinding? = null
