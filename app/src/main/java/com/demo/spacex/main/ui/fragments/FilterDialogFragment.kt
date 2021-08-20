@@ -1,5 +1,6 @@
 package com.demo.spacex.main.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FilterDialogBinding
 import com.demo.spacex.main.viewmodels.FilterViewModel
+import java.text.SimpleDateFormat
 
 
 class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -24,7 +26,6 @@ class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListe
 
     private val filterViewModel: FilterViewModel by activityViewModels()
 
-    private var isLaunchSuccess: Boolean? = null
     private var startDate: String? = null
     private var endDate: String? = null
 
@@ -54,6 +55,7 @@ class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListe
             if(it != null){
                 binding.startDateTextView.visibility = View.VISIBLE
                 binding.startDateTextView.text = it
+                startDate = it
             }
         })
 
@@ -62,6 +64,7 @@ class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListe
             if(it != null){
                 binding.endDateTextView.visibility = View.VISIBLE
                 binding.endDateTextView.text = it
+                endDate = it
             }
         })
 
@@ -139,13 +142,25 @@ class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListe
     }
 
     // show date picker dialog
+    @SuppressLint("SimpleDateFormat")
     private fun showDatePickerDialog(isStartDate: Boolean) {
         val newFragment: DialogFragment = DatePickerFragment()
+
+        // to pass date as extras and prepopulate dialog
+        val bundle = Bundle()
+        var dialogTitle = getString(R.string.filter_dialog_start_date)
         if(isStartDate) {
-            newFragment.show(childFragmentManager, getString(R.string.filter_dialog_start_date))
+            if(startDate != null) {
+                bundle.putString("dialog_date_data", startDate)
+            }
         }else{
-            newFragment.show(childFragmentManager, getString(R.string.filter_dialog_end_date))
+            if(endDate != null) {
+                bundle.putString("dialog_date_data", endDate)
+            }
+            dialogTitle = getString(R.string.filter_dialog_end_date)
         }
+        newFragment.show(childFragmentManager, dialogTitle)
+        newFragment.arguments = bundle
     }
 
     interface DialogListener {

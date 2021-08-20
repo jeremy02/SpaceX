@@ -56,12 +56,13 @@
                         android:id="@+id/start_date_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:visibility="visible"
+                        android:hint="yyyy-mm-dd"
                         android:textSize="@dimen/text_size_14"
                         android:layout_marginLeft="@dimen/dimen_10"
-                        android:text="@string/filter_dialog_start_date"
                         android:layout_below="@+id/start_date_caption"
-                        android:textColor="@color/text_color_gray_light"/>
+                        android:textColor="@color/text_color_gray_light"
+                        android:textColorHint="@color/text_color_gray_light"/>
 
                 </RelativeLayout>
 
@@ -103,12 +104,12 @@
                         android:id="@+id/end_date_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:hint="yyyy-mm-dd"
                         android:textSize="@dimen/text_size_14"
                         android:layout_marginLeft="@dimen/dimen_10"
-                        android:text="@string/filter_dialog_end_date"
                         android:layout_below="@+id/end_date_caption"
-                        android:textColor="@color/text_color_gray_light"/>
+                        android:textColor="@color/text_color_gray_light"
+                        android:textColorHint="@color/text_color_gray_light"/>
 
                 </RelativeLayout>
 
