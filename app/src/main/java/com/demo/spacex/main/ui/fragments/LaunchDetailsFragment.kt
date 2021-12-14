@@ -72,6 +72,7 @@ class LaunchDetailsFragment : BaseFragment() {
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun updateUI(res: Launches) {
+
         // set the launch name
         if(res.missionName != null) {
             launch_name.text = res.missionName
@@ -139,8 +140,6 @@ class LaunchDetailsFragment : BaseFragment() {
                 upcoming_chip.chipIcon = ContextCompat.getDrawable(requireContext(),
                     R.drawable.ic_action_cancel
                 )
-                // upcoming_chip.chipIconTint = ContextCompat.getColorStateList(requireContext(), R.color.color_red)
-                // upcoming_chip.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.color_red))
             }
         }
 
@@ -154,7 +153,7 @@ class LaunchDetailsFragment : BaseFragment() {
         // update the launch_success_chip
         if(res.launchSuccess != null){
             launch_success_chip.visibility = View.VISIBLE
-            if(res.upcoming == false){
+            if(res.launchSuccess == false){
                 launch_success_chip.chipIcon = ContextCompat.getDrawable(requireContext(),
                     R.drawable.ic_action_cancel
                 )
@@ -162,11 +161,10 @@ class LaunchDetailsFragment : BaseFragment() {
             }
         }
 
-
         // update the rocket landing_type_chip
         if(!res.rocket?.firstStage?.cores.isNullOrEmpty() && res.rocket?.firstStage?.cores?.get(0)?.landingType != null){
             landing_type_chip.visibility = View.VISIBLE
-            launch_success_chip.text = res.rocket?.firstStage?.cores?.get(0)?.landingType
+            landing_type_chip.text = res.rocket?.firstStage?.cores?.get(0)?.landingType
         }else{
             landing_type_chip.visibility = View.GONE
         }

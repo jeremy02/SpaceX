@@ -94,7 +94,7 @@
                         android:id="@+id/no_launches_found"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical"
                         android:padding="@dimen/dimen_16"
                         android:layout_below="@+id/launches_title_text_view">

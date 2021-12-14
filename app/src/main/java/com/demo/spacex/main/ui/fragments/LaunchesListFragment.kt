@@ -179,6 +179,7 @@ class LaunchesListFragment : BaseFragment() {
     // handle getting launches response
     private fun handleResponse(res: ResponseUtil<LaunchesResponse>?) {
         swipe_to_refresh_layout.isRefreshing = false
+        swipe_to_refresh_layout.isEnabled = true
 
         // adapter not clickable
         adapterClickable = false
