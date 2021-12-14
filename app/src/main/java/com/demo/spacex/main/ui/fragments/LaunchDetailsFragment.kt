@@ -72,7 +72,6 @@ class LaunchDetailsFragment : BaseFragment() {
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     private fun updateUI(res: Launches) {
-
         // set the launch name
         if(res.missionName != null) {
             launch_name.text = res.missionName
@@ -107,7 +106,6 @@ class LaunchDetailsFragment : BaseFragment() {
             try {
                 val sdf = SimpleDateFormat("MMM dd, yyyy")
                 val formattedDate: String = sdf.format(date)
-
                 launch_date.text = formattedDate
             } catch (e: ParseException) {
                 e.printStackTrace()
