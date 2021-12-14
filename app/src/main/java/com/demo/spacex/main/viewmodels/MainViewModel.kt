@@ -1,7 +1,6 @@
 package com.demo.spacex.main.viewmodels
 
 import android.app.Application
-import android.content.ClipData
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData

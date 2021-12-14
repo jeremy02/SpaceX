@@ -5,14 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.demo.spacex.R
 import com.demo.spacex.databinding.ActivityMainBinding
-import com.demo.spacex.main.ui.fragments.FilterDialogFragment
 import com.demo.spacex.main.viewmodels.FilterViewModel
 import com.demo.spacex.main.viewmodels.MainViewModel
 

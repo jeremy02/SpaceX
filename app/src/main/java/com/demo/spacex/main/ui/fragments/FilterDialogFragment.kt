@@ -15,7 +15,6 @@ import androidx.fragment.app.activityViewModels
 import com.demo.spacex.R
 import com.demo.spacex.databinding.FilterDialogBinding
 import com.demo.spacex.main.viewmodels.FilterViewModel
-import java.text.SimpleDateFormat
 
 
 class FilterDialogFragment() : DialogFragment(), DatePickerDialog.OnDateSetListener {

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.demo.spacex.R
-import kotlinx.android.synthetic.main.fragment_launch_details.*
 import kotlinx.android.synthetic.main.item_launch_image.view.*
 
 class LaunchGalleryAdapter(val itemClick: (position:Int,item: String) -> Unit) : RecyclerView.Adapter<ItemViewHolder>() {

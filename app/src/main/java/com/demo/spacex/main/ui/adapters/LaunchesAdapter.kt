@@ -2,12 +2,10 @@ package com.demo.spacex.main.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.demo.spacex.R
@@ -108,9 +106,13 @@ class LaunchesAdapter(private val mContext: Context, private val items: MutableL
         // icon for launc success
         if(obj.launchSuccess != null) {
             holder.itemView.launch_icon_view.visibility = View.VISIBLE
-            if(obj.launchSuccess == false){
-                holder.itemView.launch_icon_view.setImageResource(R.drawable.ic_action_cancel);
+            if(!obj.launchSuccess!! || obj.launchSuccess == false){
+                holder.itemView.launch_icon_view.setImageResource(R.drawable.ic_action_cancel)
+            }else{
+                holder.itemView.launch_icon_view.setImageResource(R.drawable.ic_action_check)
             }
+        }else{
+            holder.itemView.launch_icon_view.visibility = View.GONE
         }
 
         // on click launch item

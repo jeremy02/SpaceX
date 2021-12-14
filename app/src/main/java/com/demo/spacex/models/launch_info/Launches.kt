@@ -1,5 +1,4 @@
 package com.demo.spacex.models.launch_info
-import com.demo.spacex.models.company_info.Links
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
